@@ -1,4 +1,10 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
+//
+// By: Spicer Matthews
+// Company: Cloudmanic Labs, LLC 
+// Website: http://cloudmanic.com
+// Code Taken From: Phil Sturgeon http://philsturgeon.co.uk
+//
 
 class REST_Controller extends CI_Controller 
 {

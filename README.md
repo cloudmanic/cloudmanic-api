@@ -1,26 +1,25 @@
 ## Overview
 
-Codeignitor does not have a built in API like other frameworks. Delivering data via json, xml, and other formats is part of almost any web application these days. We need to deliver data to javascript based interactions. We need to deliver data to mobile devices. 
+Codeignitor does not have a built-in API like other frameworks. Delivering data via json, xml, and other formats is part of almost any web application these days. We need to deliver data to javascript based interactions. We need to deliver data to mobile devices. 
 
-This package is designed to be installed via (http://getsparks.org/)[http://getsparks.org/]. This package gives you a new controller you extend. Instead of extending CI_Controller you extend API_Controller. By extending this controller you are given options for formatting your output, standard CRUD operations, and authentiction.
+This package is designed to be installed via [http://getsparks.org](http://getsparks.org). This package gives you a new controller you extend. Instead of extending CI_Controller you extend API_Controller. By extending this controller you are given options for formatting your output, standard CRUD operations, and authentication. Since we are extending the controller you do not have to load this via $this->load->spark.
 
 THIS IS NOT A REST API. While this API takes some concepts from a traditional REST API it is not built to the correct standard. 
 
-The original concept for this package comes from (Phil Sturgeon)[http://philsturgeon.co.uk/] who authored a full REST API for Codeignitor. To learn more about his solution check out (Working with RESTful Services in CodeIgniter)[http://net.tutsplus.com/tutorials/php/working-with-restful-services-in-codeigniter-2/]. Some of the code in this package is a direct copy and paste from his open source library. We have stripped out some of the bells and whistles he provides to deliver a more robust but focused solution. 
+The original concept for this package comes from [Phil Sturgeon](http://philsturgeon.co.uk) who authored a full REST API for Codeignitor. To learn more about his solution check out [Working with RESTful Services in CodeIgniter](http://net.tutsplus.com/tutorials/php/working-with-restful-services-in-codeigniter-2/). Some of the code in this package is a direct copy and paste from his open source library. We have stripped out some of the bells and whistles he provides to deliver a more robust but focused solution. 
  
 ## Requirements
 
-1. PHP 5.1+
+1. PHP 5.3+
 2. CodeIgniter 2.0.0+
 3. CURL
 
 
 ## Installation 
 
-Step #1) 
-	This has nothing to do with configs but this file is loaded early enough to it is a great place to have an auto loader. When you extend your controller with "API_Controller" the system will not know where to find that class so with the PHP autoloader you can tell the system where the library file lives and auto load it. More information here: (http://philsturgeon.co.uk/news/2010/02/CodeIgniter-Base-Classes-Keeping-it-DRY)[http://philsturgeon.co.uk/news/2010/02/CodeIgniter-Base-Classes-Keeping-it-DRY].
+Step #1) This has nothing to do with configs but this file is loaded early enough to so is a great place to have an auto loader. When you extend your controller with "API_Controller" the system will not know where to find that class so with the PHP autoloader you can tell the system where the library file lives and auto load it. More information here: [http://philsturgeon.co.uk/news/2010/02/CodeIgniter-Base-Classes-Keeping-it-DRY](http://philsturgeon.co.uk/news/2010/02/CodeIgniter-Base-Classes-Keeping-it-DRY).
 
-If you are not installing this package via sparks or a raw third party install put your REST_Controller library in the core directory and remove the "case 'REST_Controller':" statement. 
+If you are not installing this package via sparks or a raw third party install put your REST_Controller library in the core directory and remove the "case 'REST_Controller' & 'API_Controller':" statement. 
 
 Also, don't forget to update the spark include path to the proper version number. This is where it says "X.X.X" below.
 
@@ -56,13 +55,11 @@ function __autoload($class)
 }
 ```
 
-Step #2)
-Review the configs in SPARKPATH . 'cloudmanic-api/rest.php. By setting this config $config['api_model_guess'] the API will read the URL request and load a model based on that request. Then based on the action it will call particular functions in that model to return data. More on this below.
+Step #2) Review the configs in SPARKPATH . 'cloudmanic-api/rest.php. By setting this config $config['api_model_guess'] the API will read the URL request and load a model based on that request. Then based on the action it will call particular functions in that model to return data. More on this below.
 	
 If you are going to authenticate you need to set $config['api_enable_custom_auth'] in the config. You are going to set a library and a method to call when a user tries to authenticate. If the function returns TRUE the user is authenticated if false the user is given an error message. The API will auto load the library you are calling with $this->load->library('blah'). You have to build your own authentication library and method. This give you complete control. More on authentication below. 
 
-Step #3) 
-Build your first controller. You build a controller like any other Codeignitor but you extend API_Controller. Below is an example.
+Step #3) Build your first controller. You build a controller like any other Codeignitor but you extend API_Controller. Below is an example.
 	
 ```
 <?php if(! defined('BASEPATH')) exit('No direct script access allowed');
@@ -130,7 +127,7 @@ If you have an empty controller like the one above the following API requests ca
 http://yourdomain.com/people/{get, create, delete, update}/format/{json, php, xml}
 ```
 
-These calls are delivered from the API_Controller.php library. These calls will detect a model name from the API url. You can set which segment that is from the $config['api_model_guess'] config. In the example above the url segment would be 1 (people).
+These calls are delivered from the API_Controller.php library. These calls will detect a model name from the API url. You can set which segment with from the $config['api_model_guess'] config. In the example above the url segment would be 1 (people).
 
 ```
 $config['api_model_guess'] = array('segment' => 1, 'postfix' => '_model');
@@ -215,28 +212,54 @@ class People extends API_Controller
 
 ## Validation
 
-When using our built in CRUD operations we provide validation via the config/form_validation.php. We call validation rules from there. The rule names will be in this format 'api-' . object . '-' . action. So for an update operation on people your validation rule would be "api-people-update". If validation fails the the field names with error messages will be returned.
+When using our built-in CRUD operations we provide validation via the config/form_validation.php. We call validation rules from there. The rule names will be in this format 'api-' . object . '-' . action. So for an update operation on people your validation rule would be "api-people-update". If validation fails the the field names with error messages will be returned.
+
+
+
+## Custom API Calls
+
+As you can see the main part of this package is allowing you to have a toolbox for easy CRUD operations. Very little has to be done to have full CRUD on your database via your models. You can also build your own controller methods. You just have to add a "_post" or "_get" after you method calls. Here is an example.
+
+```
+class People extends API_Controller
+{
+	function max_get()
+	{
+		$this->load->model('people_model');
+		$this->_return['data'] = $this->people_model->get_max_number_of_people();
+		$this->response($this->_return, 200);
+	}
+}
+```
+
+You can can pass in any array you want into response() but $this->_return is preloaded in a nice format with meta data. The second argument is the http response code. 
+
+You would access the above request like this.
+
+```
+http://example.org/people/max/format/json
+```
 
 
 ## Functions
 
 Here is a list of public functions you can call in your controllers. 
 
-set_model()
-clear_select_fields()
-clear_create_fields()
-clear_update_fields()
-set_select_fields()
-set_create_fields()
-set_update_fields()
-set_not_allowed_methods(array())
-clear_not_allowed_methods()
+* set_model()
+* clear_select_fields()
+* clear_create_fields()
+* clear_update_fields()
+* set_select_fields()
+* set_create_fields()
+* set_update_fields()
+* set_not_allowed_methods(array())
+* clear_not_allowed_methods()
 
 
 ## Author(s) 
 
-Company: Cloudmanic Labs, [http://cloudmanic.com](http://cloudmanic.com)
+* Company: Cloudmanic Labs, [http://cloudmanic.com](http://cloudmanic.com)
 
-By: Spicer Matthews [http://spicermatthews.com](http://spicermatthews.com)
+* By: Spicer Matthews [http://spicermatthews.com](http://spicermatthews.com)
 
-By: Phil Sturgeon (http://philsturgeon.co.uk/)[http://philsturgeon.co.uk/]
+* By: Phil Sturgeon (http://philsturgeon.co.uk/)[http://philsturgeon.co.uk/]
