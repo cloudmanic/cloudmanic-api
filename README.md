@@ -57,12 +57,12 @@ function __autoload($class)
 ```
 
 Step #2)
-	Review the configs in SPARKPATH . 'cloudmanic-api/rest.php. By setting this config $config['api_model_guess'] the API will read the URL request and load a model based on that request. Then based on the action it will call particular functions in that model to return data. More on this below.
+Review the configs in SPARKPATH . 'cloudmanic-api/rest.php. By setting this config $config['api_model_guess'] the API will read the URL request and load a model based on that request. Then based on the action it will call particular functions in that model to return data. More on this below.
 	
-	If you are going to authenticate you need to set $config['api_enable_custom_auth'] in the config. You are going to set a library and a method to call when a user tries to authenticate. If the function returns TRUE the user is authenticated if false the user is given an error message. The API will auto load the library you are calling with $this->load->library('blah'). You have to build your own authentication library and method. This give you complete control. More on authentication below. 
+If you are going to authenticate you need to set $config['api_enable_custom_auth'] in the config. You are going to set a library and a method to call when a user tries to authenticate. If the function returns TRUE the user is authenticated if false the user is given an error message. The API will auto load the library you are calling with $this->load->library('blah'). You have to build your own authentication library and method. This give you complete control. More on authentication below. 
 
 Step #3) 
-	Build your first controller. You build a controller like any other Codeignitor but you extend API_Controller. Below is an example.
+Build your first controller. You build a controller like any other Codeignitor but you extend API_Controller. Below is an example.
 	
 ```
 <?php if(! defined('BASEPATH')) exit('No direct script access allowed');
