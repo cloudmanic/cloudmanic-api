@@ -236,5 +236,7 @@ clear_not_allowed_methods()
 ## Author(s) 
 
 Company: Cloudmanic Labs, [http://cloudmanic.com](http://cloudmanic.com)
+
 By: Spicer Matthews [http://spicermatthews.com](http://spicermatthews.com)
+
 By: Phil Sturgeon (http://philsturgeon.co.uk/)[http://philsturgeon.co.uk/]

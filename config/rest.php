@@ -28,8 +28,7 @@ $config['api_default_format'] = 'json';
 | $config['api_enable_custom_auth'] = array('library' => '', 'method' => '');
 |
 */
-$config['api_enable_custom_auth'] = array('library' => 'cloudauth', 
-																						'method' => 'apiinit');
+//$config['api_enable_custom_auth'] = array('library' => '', 'method' => '');
 																						
 /*
 |--------------------------------------------------------------------------
@@ -42,12 +41,7 @@ $config['api_enable_custom_auth'] = array('library' => 'cloudauth',
 |
 |
 */
-$config['api_skip_auth']['accounts']['create'] = TRUE;
-
-// NEED TO REVIST THESE FOR PRODUCTION
-$config['api_skip_auth']['accounts']['delete'] = TRUE;
-$config['api_skip_auth']['accounts']['get'] = TRUE;
-																						
+$config['api_skip_auth']['users']['get'] = TRUE;																						
 																																											
 /*
 |--------------------------------------------------------------------------
@@ -65,7 +59,7 @@ $config['api_skip_auth']['accounts']['get'] = TRUE;
 | $config['api_model_guess'] = array('segment' => 1, 'postfix' => '_model');
 |
 */
-$config['api_model_guess'] = array('segment' => 2, 'postfix' => '_model');
+$config['api_model_guess'] = array('segment' => 1, 'postfix' => '_model');
 
 /*
 |--------------------------------------------------------------------------
