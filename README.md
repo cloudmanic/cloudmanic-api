@@ -1,5 +1,7 @@
 ## Overview
 
+This package is an API controller with default CRUD operations buit-in. From the url request we can have fully customizable CRUD operations driven from your models. 
+
 Codeignitor does not have a built-in API like other frameworks. Delivering data via json, xml, and other formats is part of almost any web application these days. We need to deliver data to javascript based interactions. We need to deliver data to mobile devices. 
 
 This package is designed to be installed via [http://getsparks.org](http://getsparks.org). This package gives you a new controller you extend. Instead of extending CI_Controller you extend API_Controller. By extending this controller you are given options for formatting your output, standard CRUD operations, and authentication. Since we are extending the controller you do not have to load this via $this->load->spark.
