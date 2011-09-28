@@ -264,4 +264,4 @@ Here is a list of public functions you can call in your controllers.
 
 * By: Spicer Matthews [http://spicermatthews.com](http://spicermatthews.com)
 
-* By: Phil Sturgeon (http://philsturgeon.co.uk/)[http://philsturgeon.co.uk/]
+* By: Phil Sturgeon [http://philsturgeon.co.uk/](http://philsturgeon.co.uk/)
