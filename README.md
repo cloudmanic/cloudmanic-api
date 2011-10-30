@@ -2,13 +2,13 @@
 
 This package is an API controller with default CRUD operations buit-in. From the url request we can have fully customizable CRUD operations driven from your models. 
 
-Codeignitor does not have a built-in API like other frameworks. Delivering data via json, xml, and other formats is part of almost any web application these days. We need to deliver data to javascript based interactions. We need to deliver data to mobile devices. 
+Codeigniter does not have a built-in API like other frameworks. Delivering data via json, xml, and other formats is part of almost any web application these days. We need to deliver data to javascript based interactions. We need to deliver data to mobile devices. 
 
 This package is designed to be installed via [http://getsparks.org](http://getsparks.org). This package gives you a new controller you extend. Instead of extending CI_Controller you extend API_Controller. By extending this controller you are given options for formatting your output, standard CRUD operations, and authentication. Since we are extending the controller you do not have to load this via $this->load->spark.
 
 THIS IS NOT A REST API. While this API takes some concepts from a traditional REST API it is not built to the correct standard. 
 
-The original concept for this package comes from [Phil Sturgeon](http://philsturgeon.co.uk) who authored a full REST API for Codeignitor. To learn more about his solution check out [Working with RESTful Services in CodeIgniter](http://net.tutsplus.com/tutorials/php/working-with-restful-services-in-codeigniter-2/). Some of the code in this package is a direct copy and paste from his open source library. We have stripped out some of the bells and whistles he provides to deliver a more robust but focused solution. 
+The original concept for this package comes from [Phil Sturgeon](http://philsturgeon.co.uk) who authored a full REST API for Codeigniter. To learn more about his solution check out [Working with RESTful Services in CodeIgniter](http://net.tutsplus.com/tutorials/php/working-with-restful-services-in-codeigniter-2/). Some of the code in this package is a direct copy and paste from his open source library. We have stripped out some of the bells and whistles he provides to deliver a more robust but focused solution. 
  
 ## Requirements
 
@@ -61,7 +61,7 @@ Step #2) Review the configs in SPARKPATH . 'cloudmanic-api/rest.php. By setting 
 	
 If you are going to authenticate you need to set $config['api_enable_custom_auth'] in the config. You are going to set a library and a method to call when a user tries to authenticate. If the function returns TRUE the user is authenticated if false the user is given an error message. The API will auto load the library you are calling with $this->load->library('blah'). You have to build your own authentication library and method. This give you complete control. More on authentication below. 
 
-Step #3) Build your first controller. You build a controller like any other Codeignitor but you extend API_Controller. Below is an example.
+Step #3) Build your first controller. You build a controller like any other Codeigniter but you extend API_Controller. Below is an example.
 	
 ```
 <?php if(! defined('BASEPATH')) exit('No direct script access allowed');
