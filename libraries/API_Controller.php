@@ -35,8 +35,8 @@ class API_Controller extends REST_Controller
 			$this->_return['data'] = $this->{$this->_model}->{$this->_model_methods['get']}();			
 		}
 		
-		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}();
 		$this->_return['filtered'] = $this->{$this->_model}->{$this->_model_methods['filtered']}();
+		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}();
 		$this->response($this->_return, 200);
 	}
 	
