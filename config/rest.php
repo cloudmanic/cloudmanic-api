@@ -84,6 +84,7 @@ $config['api_model_functions']['filtered'] = 'get_filter_query_count';
 $config['api_model_functions']['order'] = 'set_order';
 $config['api_model_functions']['limit'] = 'set_limit';
 $config['api_model_functions']['select'] = 'set_select';
+$config['api_model_functions']['search'] = 'set_search';
 
 
 /* End file */

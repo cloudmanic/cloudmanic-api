@@ -344,6 +344,12 @@ class API_Controller extends REST_Controller
 	//
 	private function _query_init()
 	{	
+		// Set search term
+		if($this->get('search'))
+		{
+			$this->{$this->_model}->{$this->_model_methods['search']}($this->get('search'));
+		}
+		
 		// Grab data from model
 		if($this->get('order'))
 		{
