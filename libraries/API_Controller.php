@@ -25,6 +25,7 @@ class API_Controller extends REST_Controller
 		$this->_check_access('get');
 		$this->_model_init();
 		$this->_query_init();
+		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}(); 
 		
 		// If we pass in an id field we call a different function. 
 		if($this->get('id'))
@@ -36,7 +37,6 @@ class API_Controller extends REST_Controller
 		}
 		
 		$this->_return['filtered'] = $this->{$this->_model}->{$this->_model_methods['filtered']}();
-		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}();
 		$this->response($this->_return, 200);
 	}
 	
@@ -249,7 +249,7 @@ class API_Controller extends REST_Controller
 	// access to insert fields in a database table. 
 	// Any extra post variables are removed by this filter.
 	// 
-	private function _insert_filter($data)
+	function _insert_filter($data)
 	{
 		if($this->_insert_fields)
 		{
@@ -270,7 +270,7 @@ class API_Controller extends REST_Controller
 	// access to update fields in a database table. 
 	// Any extra post variables are removed by this filter.
 	// 
-	private function _update_filter($data)
+	function _update_filter($data)
 	{
 		if($this->_update_fields)
 		{
@@ -289,7 +289,7 @@ class API_Controller extends REST_Controller
 	//
 	// Check to see if we have granted the user permission for this request.
 	//
-	private function _check_access($type)
+	function _check_access($type)
 	{
 		// See if the user has not said this method is not allowed.
 		if(in_array($type, $this->_not_allowed_methods))
@@ -302,7 +302,7 @@ class API_Controller extends REST_Controller
 	// Setup all the config variables that are needed for our default 
 	// CRUD operations triggered off models. Then load our model.
 	//
-	private function _model_init()
+	function _model_init()
 	{
 		$config = config_item('api_model_guess');
 		$this->_model_methods = config_item('api_model_functions'); 
@@ -326,7 +326,7 @@ class API_Controller extends REST_Controller
 	// Checks to make sure all the required functions 
 	// in our models for our generic API are set. 
 	//
-	private function _check_model_functions()
+	function _check_model_functions()
 	{
 		foreach($this->_model_methods AS $key => $row)
 		{
@@ -342,14 +342,8 @@ class API_Controller extends REST_Controller
 	// we use to call model based functions. We have to have the model
 	// set for this function to do anythging.
 	//
-	private function _query_init()
+	function _query_init()
 	{	
-		// Set search term
-		if($this->get('search'))
-		{
-			$this->{$this->_model}->{$this->_model_methods['search']}($this->get('search'));
-		}
-		
 		// Grab data from model
 		if($this->get('order'))
 		{
