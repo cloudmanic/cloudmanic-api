@@ -25,7 +25,6 @@ class API_Controller extends REST_Controller
 		$this->_check_access('get');
 		$this->_model_init();
 		$this->_query_init();
-		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}(); 
 		
 		// If we pass in an id field we call a different function. 
 		if($this->get('id'))
@@ -36,6 +35,7 @@ class API_Controller extends REST_Controller
 			$this->_return['data'] = $this->{$this->_model}->{$this->_model_methods['get']}();			
 		}
 		
+		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}(); 
 		$this->_return['filtered'] = $this->{$this->_model}->{$this->_model_methods['filtered']}();
 		$this->response($this->_return, 200);
 	}
