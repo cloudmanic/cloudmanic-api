@@ -54,7 +54,8 @@ class REST_Controller extends CI_Controller
 		// Set up our GET / POST variables
 		$this->_get_args = $this->uri->ruri_to_assoc();
 		$this->_post_args = $_POST;
-		$this->_args = array_merge($this->_get_args, $this->_post_args);
+		$this->_raw_get_args = $_GET;
+		$this->_args = array_merge($this->_get_args, $this->_post_args, $this->_raw_get_args);
 		
 		// Detect params. that the request sent in.
 		$this->_request_method = $this->_detect_method();
