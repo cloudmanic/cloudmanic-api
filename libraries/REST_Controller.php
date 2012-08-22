@@ -52,9 +52,9 @@ class REST_Controller extends CI_Controller
 		$this->load->library('format');
 		
 		// Set up our GET / POST variables
-		$this->_get_args = $this->uri->ruri_to_assoc();
+		$this->_get_args = array_merge($this->uri->ruri_to_assoc(), $_GET);
 		$this->_post_args = $_POST;
-		$this->_args = array_merge($this->_get_args, $this->_post_args);
+		$this->_args = array_merge($this->_get_args, $this->_post_args, $_GET);
 		
 		// Detect params. that the request sent in.
 		$this->_request_method = $this->_detect_method();

@@ -14,6 +14,7 @@ class API_Controller extends REST_Controller
 	protected $_insert_fields = array(); 
 	protected $_update_fields = array();
 	protected $_custom_auth = ''; 
+	protected $_override_access = FALSE;
 																					
 	// ------------- CRUD Operations ---------------- //
 		
@@ -32,11 +33,11 @@ class API_Controller extends REST_Controller
 			$this->_return['data'] = $this->{$this->_model}->{$this->_model_methods['getid']}($this->get('id'));
 		} else 
 		{
-			$this->_return['data'] = $this->{$this->_model}->{$this->_model_methods['get']}();			
+			$this->_return['data'] = $this->{$this->_model}->{$this->_model_methods['get']}();		
+			$this->_return['filtered'] = $this->{$this->_model}->{$this->_model_methods['filtered']}();
+			$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}();				
 		}
-		
-		$this->_return['total'] = $this->{$this->_model}->{$this->_model_methods['total']}(); 
-		$this->_return['filtered'] = $this->{$this->_model}->{$this->_model_methods['filtered']}();
+
 		$this->response($this->_return, 200);
 	}
 	
@@ -291,6 +292,11 @@ class API_Controller extends REST_Controller
 	//
 	function _check_access($type)
 	{
+		if($this->_override_access)
+		{
+			return true;
+		}
+	
 		// See if the user has not said this method is not allowed.
 		if(in_array($type, $this->_not_allowed_methods))
 		{
