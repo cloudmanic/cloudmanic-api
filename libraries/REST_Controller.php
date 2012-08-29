@@ -22,6 +22,7 @@ class REST_Controller extends CI_Controller
 		'xml' => 'application/xml',
 		'rawxml' => 'application/xml',
 		'json' => 'application/json',
+		'jsonp' => 'text/javascript',
 		'serialize' => 'application/vnd.php.serialized',
 		'php' => 'text/plain'
 	);
@@ -172,7 +173,7 @@ class REST_Controller extends CI_Controller
 		
 		// Oops we did not authenticate tell the user and stop.
 		$this->_return['status'] = 0;
-		$this->_return['errors'][] = 'Not Authorized.';		
+		$this->_return['errors'][] = array('field' => 'authentication', 'error' => 'Not Authorized.');	
 		$this->response($this->_return, 200);
 	}
 	

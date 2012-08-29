@@ -204,6 +204,17 @@ class Format {
 		return json_encode($this->_data);
 	}
 
+	// Encode as JSONP	 
+	function to_jsonp()
+	{
+		if(get_instance()->input->get('callback'))
+		{
+			return get_instance()->input->get('callback') . '(' .json_encode($this->_data) . ')';
+		}
+		
+		return 'callback(' .json_encode($this->_data) . ')';
+	}
+
 	// Encode as Serialized array
 	public function to_serialized()
 	{
