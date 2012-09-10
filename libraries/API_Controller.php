@@ -372,6 +372,12 @@ class API_Controller extends REST_Controller
 		  }
 		}
 		
+		// Set no extra
+		if($this->get('noextra'))
+		{
+			$this->{$this->_model}->{$this->_model_methods['noextra']}();
+		} 
+		
 		// Set select fields
 		if($this->_select_fields)
 		{

@@ -88,13 +88,26 @@ class REST_Controller extends CI_Controller
 	//
 	// Response: Takes pure data and optionally a status code, then creates the response.
 	//
-	function response($data = array(), $http_code = null)
+	function response($data = array(), $http_code = null, $file_base = 'downloaded')
 	{
 		// If data is empty and not code provide, error and bail
 		if(empty($data) && $http_code === null)
 		{
 			$http_code = 404;
  		} 
+		
+ 		// See if we passed in a file base name.
+ 		if(isset($this->_args['filebase']))
+ 		{
+	 		$file_base = $this->_args['filebase'];
+	 	}
+		
+		// Since CSV is only one layer we only include the data.
+ 		if($this->_output_format == 'csv')
+ 		{
+	 		header('Content-Disposition: attachment; filename="' . $file_base . '.csv"');
+	 		$data = $data['data'];
+ 		}
 		
 		// Format and return output.
 		is_numeric($http_code) OR $http_code = 200;
@@ -106,6 +119,7 @@ class REST_Controller extends CI_Controller
 		
 		exit($output);
 	}
+
 	
 	//
 	// A getter function to return a POST variable.

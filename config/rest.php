@@ -85,6 +85,7 @@ $config['api_model_functions']['order'] = 'set_order';
 $config['api_model_functions']['limit'] = 'set_limit';
 $config['api_model_functions']['select'] = 'set_select';
 $config['api_model_functions']['search'] = 'set_search';
+$config['api_model_functions']['noextra'] = 'set_no_extra';
 
 
 /* End file */
